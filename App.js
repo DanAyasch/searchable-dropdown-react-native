@@ -1,21 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomDropdown from "./src/CustomDropdown";
 
 export default function App() {
+  const [selectedValues, setSelectedValues] = useState([]);
+
   return (
     <CustomDropdown
-      options={[
-        { name: "Test", value: "test" },
-        { name: "Test", value: "test" },
-        { name: "Test", value: "test" },
-        { name: "Test", value: "test" }
-      ]}
-      selectedValues={[]}
-      setSelectedValues={() => console.log("HERE I SET")}
+      options={[{ name: "Test", value: "test" }]}
+      selectedValues={selectedValues}
+      setSelectedValues={setSelectedValues}
       label="test dropdown"
       placeholder="Test placeholder"
+      inputSize={300}
     />
   );
 }

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     marginTop: 10,
-    color: "#241C4C"
+    color: "#000"
   },
   input: {
     paddingLeft: 10,
@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: "#241C4C",
+    borderColor: "#000",
     height: 50,
     opacity: 0.5,
-    color: "#241C4C",
+    color: "#000",
     borderRadius: 4
   }
 });
@@ -41,7 +41,13 @@ const CustomDropdown = ({
   options,
   selectedValues,
   setSelectedValues,
-  setScrollNotOnFlatlist
+  rightIcon,
+  selectedElementColor,
+  setScrollNotOnFlatlist,
+  labelStyle,
+  inputContainerStyle,
+  inputColor,
+  inputSize
 }) => {
   const [search, setSearch] = useState("");
   const [isDisplayingOptions, setIsDisplayingOptions] = useState(false);
@@ -59,20 +65,22 @@ const CustomDropdown = ({
   return (
     <View style={{ flexDirection: "column" }}>
       <View>
-        <Text style={styles.label}>{label}</Text>
+        <Text style={{ ...styles.label, ...labelStyle }}>{label}</Text>
       </View>
       <View
         style={{
           ...styles.inputContainer,
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
+          ...inputContainerStyle,
+          width: inputSize ? inputSize : "auto"
         }}
       >
-        <View>
+        <View style={{ width: "90%" }}>
           <TextInput
-            placeholderTextColor="#241C4C"
-            color="#241C4C"
+            placeholderTextColor={inputColor}
+            color={inputColor}
             style={styles.input}
             fontStyle={!search || search.length == 0 ? "italic" : "normal"}
             placeholder={placeholder}
@@ -85,7 +93,7 @@ const CustomDropdown = ({
                 setItems(savedItems);
               } else {
                 let data = [];
-                for (let item of items) {
+                for (let item of savedItems) {
                   if (item.value.toLowerCase().includes(value.toLowerCase())) {
                     data.push(item);
                   }
@@ -118,8 +126,9 @@ const CustomDropdown = ({
               style={{
                 flexDirection: "row",
                 borderWidth: 1,
-                borderColor: "#825DFF",
-                flexWrap: "wrap"
+                borderColor: "#000",
+                flexWrap: "wrap",
+                width: inputSize ? inputSize : "auto"
               }}
             >
               <FlatList
@@ -139,69 +148,57 @@ const CustomDropdown = ({
                 data={items}
                 extraData={selectedValues}
                 style={{ maxHeight: 200 }}
-                contentContainerStyle={{ width: "100%" }}
-                renderItem={({ item, index }) => {
+                contentContainerStyle={{
+                  width: inputSize ? inputSize - 2 : "100%"
+                }}
+                renderItem={({ item }) => {
                   return (
                     <ListItem
+                      key={item.name}
                       containerStyle={{
                         backgroundColor: selectedValues.some(
-                          category => category === item.value
+                          value => value === item.value
                         )
-                          ? "rgba(130, 93, 255, 0.15)"
+                          ? selectedElementColor
                           : "transparent"
-                      }}
-                      titleStyle={{
-                        fontSize: 14
                       }}
                       bottomDivider={true}
                       Component={TouchableWithoutFeedback}
-                      title={item.name}
-                      rightIcon={
-                        selectedValues.some(
-                          category => category === item.value
-                        ) ? (
-                          <AntDesign
-                            name="checkcircle"
-                            color={"#825DFF"}
-                            size={17}
-                          />
-                        ) : (
-                          {}
-                        )
-                      }
                       onPress={() => {
-                        if (
-                          !selectedValues.some(
-                            category => category === item.value
-                          )
-                        )
+                        if (!selectedValues.some(value => value === item.value))
                           setSelectedValues([...selectedValues, item.value]);
                         else {
                           removeItem(item.value);
                         }
                       }}
-                    />
+                    >
+                      <ListItem.Content>
+                        <ListItem.Title style={{ fontSize: 14 }}>
+                          {item.name}
+                        </ListItem.Title>
+                      </ListItem.Content>
+                      {selectedValues.some(value => value === item.value) &&
+                        rightIcon}
+                    </ListItem>
                   );
                 }}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(_, index) => index.toString()}
               />
             </View>
           ) : (
-            <View
-              style={{
-                flexDirection: "row",
-                borderWidth: 1,
-                borderColor: "#825DFF"
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setSavedItems([...savedItems, { name: search, value: search }]);
+                setItems([...items, { name: search, value: search }]);
+                setSelectedValues([...selectedValues, search]);
               }}
             >
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  setSavedItems([
-                    ...savedItems,
-                    { name: search, value: search }
-                  ]);
-                  setItems([...items, { name: search, value: search }]);
-                  setSelectedValues([...selectedValues, search]);
+              <View
+                style={{
+                  flexDirection: "row",
+                  borderWidth: 1,
+                  borderColor: "#000",
+                  width: inputSize ? inputSize : "auto"
                 }}
               >
                 <View
@@ -214,14 +211,14 @@ const CustomDropdown = ({
                     {`${addNewElementText}${search}`}
                   </Text>
                 </View>
-              </TouchableWithoutFeedback>
-            </View>
+              </View>
+            </TouchableWithoutFeedback>
           ))}
         <View
           style={{
             flexDirection: "row",
             marginTop: 15,
-            maxWidth: 350,
+            maxWidth: "100%",
             flexWrap: "wrap"
           }}
         >
@@ -245,9 +242,16 @@ CustomDropdown.propTypes = {
   placeholder: PropTypes.string,
   addNewElementText: PropTypes.string,
   options: PropTypes.array.isRequired,
+  rightIcon: PropTypes.element,
+  selectedElementColor: PropTypes.string,
   selectedValues: PropTypes.array.isRequired,
   setSelectedValues: PropTypes.func.isRequired,
   setScrollNotOnFlatlist: PropTypes.func
+};
+
+CustomDropdown.defaultProps = {
+  rightIcon: <AntDesign name="checkcircle" color={"#000"} size={17} />,
+  selectedElementColor: "rgba(0, 0, 0, 0.1)"
 };
 
 export default CustomDropdown;
