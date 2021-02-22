@@ -28,6 +28,11 @@
     "type": "git",
     "url": "https://github.com/DanAyasch/searchable-dropdown-react-native.git"
   },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
   "publishConfig": {
     "access": "restricted"
   }

@@ -7,6 +7,8 @@ notifications:
   email: false
 node_js:
   - 8
+install:
+  - yarn
 before_install:
   - npm install codecov.io coveralls
 after_success:
