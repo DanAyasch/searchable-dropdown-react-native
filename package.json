@@ -1,39 +1,32 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "name": "searchable-dropdown-react-native",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
-    "semantic-release": "semantic-release"
-  },
-  "dependencies": {
-    "expo": "~39.0.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
-    "react-native-elements": "^3.0.0-alpha.1",
-    "react-native-paper": "^4.4.0",
-    "react-native-web": "~0.13.12"
-  },
-  "devDependencies": {
-    "@babel/core": "~7.9.0",
-    "semantic-release": "^17.3.9"
-  },
-  "private": true,
-  "version": "0.0.0-development",
+  "version": "1.0.0",
+  "description": "A searchable dropdown in React Native.",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-native",
+    "react-native-component",
+    "dropdown",
+    "select",
+    "option"
+  ],
+  "homepage": "https://github.com/DanAyasch/searchable-dropdown-react-native",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/DanAyasch/searchable-dropdown-react-native.git"
   },
-  "release": {
-    "branches": [
-      "main"
-    ]
+  "peerDependencies": {
+    "react": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz"
   },
-  "publishConfig": {
-    "access": "restricted"
+  "dependencies": {
+    "react-dom": "16.13.1",
+    "react-native-elements": "^3.0.0-alpha.1",
+    "react-native-paper": "^4.4.0"
+  },
+  "scripts": {
+    "test": "echo \"no test specified\" && exit 0"
   }
 }
