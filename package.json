@@ -18,13 +18,13 @@
     "url": "https://github.com/DanAyasch/searchable-dropdown-react-native.git"
   },
   "peerDependencies": {
-    "react": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz"
+    "react": "17.0.2",
+    "react-native": "0.68.2"
   },
   "dependencies": {
-    "react-dom": "16.13.1",
-    "react-native-elements": "^3.0.0-alpha.1",
-    "react-native-paper": "^4.4.0"
+    "react-dom": "17.0.2",
+    "react-native-elements": "^3.4.2",
+    "react-native-paper": "^4.12.5"
   },
   "scripts": {
     "test": "echo \"no test specified\" && exit 0"
