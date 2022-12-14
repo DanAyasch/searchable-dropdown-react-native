@@ -38,7 +38,7 @@ const CustomDropdown = ({
   label,
   placeholder,
   addNewElementText = "Add ",
-  options,
+  options = [],
   selectedValues,
   setSelectedValues,
   rightIcon,
